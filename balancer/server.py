@@ -38,7 +38,10 @@ async def process_redir(request: Request) -> HTTPResponse:
     cdn_url_builder: CDNURLBuilder = request.app.ctx.cdn_url_builder
 
     if redirect_decider.decide_redirect(request) is RedirectDecision.CDN:
-        cdn_url = cdn_url_builder.make_cdn_url(video_url)
-        return redirect(cdn_url, status=302)
+        try:
+            cdn_url = cdn_url_builder.make_cdn_url(video_url)
+            return redirect(cdn_url, status=302)
+        except ValueError:
+            return text('bad video url', status=400)
     else:
         return redirect(video_url, status=302)

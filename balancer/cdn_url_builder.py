@@ -1,3 +1,4 @@
+from typing import Optional
 from urllib.parse import urlparse
 
 
@@ -7,9 +8,11 @@ class CDNURLBuilder:
 
     def make_cdn_url(self, origin_url: str) -> str:
         parsed_url = urlparse(origin_url)
-        if None in (parsed_url.hostname, parsed_url.path):
+
+        server: Optional[str] = parsed_url.hostname and parsed_url.hostname.split('.', 1)[0]
+        location: str = parsed_url.path.lstrip('/')
+
+        if not (server and location):
             raise ValueError(f'cannot find hostname or path in url: {origin_url}')
-        server = parsed_url.hostname.split('.', 1)[0]
-        location = parsed_url.path.lstrip('/')
 
         return f'http://{self._cdn_host}/{server}/{location}'

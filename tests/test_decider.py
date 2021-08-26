@@ -17,7 +17,7 @@ _DUMMY_REQUEST: Request = cast(Request, object())
     (4, 9, 23, 1, 0)
 )
 def test_ratio_redirect_decider(ratio: int) -> None:
-    decider = RatioRedirectDecider(cdn_request_ratio=ratio)
+    decider = RatioRedirectDecider(cdn_redirect_ratio=ratio)
     expected_decisions = (RedirectDecision.CDN,) * ratio + (RedirectDecision.ORIGIN,)
 
     for exp_decision in expected_decisions * 2 + (RedirectDecision.CDN,) * ratio:

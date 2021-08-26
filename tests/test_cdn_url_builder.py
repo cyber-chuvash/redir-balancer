@@ -21,3 +21,17 @@ from balancer.cdn_url_builder import CDNURLBuilder
 def test_cdn_url_builder(origin_url: str, exp_cdn_url: str) -> None:
     url_builder = CDNURLBuilder(cdn_host='cdn.test')
     assert url_builder.make_cdn_url(origin_url) == exp_cdn_url
+
+
+@pytest.mark.parametrize(
+    'bad_url',
+    (
+        'http:///video/5423/%7Etest34289.m3u8',
+        'http://test.com',
+        'http://test.com/',
+    )
+)
+def test_cdn_url_builder_bad_url(bad_url: str) -> None:
+    url_builder = CDNURLBuilder(cdn_host='cdn.test')
+    with pytest.raises(ValueError):
+        url_builder.make_cdn_url(bad_url)
