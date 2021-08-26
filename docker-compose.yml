@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  balancer:
+    build: .
+    ports:
+      - "127.0.0.1:8080:80"
+    environment:
+      SANIC_CDN_HOST: "cdn.test"
+      SANIC_CDN_REDIRECT_RATIO: 9

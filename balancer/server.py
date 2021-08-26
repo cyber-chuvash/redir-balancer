@@ -24,7 +24,7 @@ async def setup_app(app_: Sanic, _loop: AbstractEventLoop) -> None:
         # Default config for convenience, production-ready code should have proper config management
         app_.config.CDN_REDIRECT_RATIO = 9
         app_.config.CDN_HOST = 'cdn.test'
-    app_.ctx.redirect_decider = RatioRedirectDecider(cdn_redirect_ratio=app_.config.CDN_REDIRECT_RATIO)
+    app_.ctx.redirect_decider = RatioRedirectDecider(cdn_redirect_ratio=int(app_.config.CDN_REDIRECT_RATIO))
     app_.ctx.cdn_url_builder = CDNURLBuilder(cdn_host=app_.config.CDN_HOST)
 
 
