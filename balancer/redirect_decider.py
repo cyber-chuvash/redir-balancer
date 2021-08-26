@@ -21,16 +21,16 @@ class AbstractRedirectDecider(ABC):
 
 
 class RatioRedirectDecider(AbstractRedirectDecider):
-    def __init__(self, *, cdn_request_ratio: int = 9) -> None:
+    def __init__(self, *, cdn_redirect_ratio: int = 9) -> None:
         """
-        :param cdn_request_ratio: How many CDN redirects to make before making 1 origin redirect
+        :param cdn_redirect_ratio: How many CDN redirects to make before making 1 origin redirect
         """
-        self._cdn_request_ratio = cdn_request_ratio
+        self._cdn_redirect_ratio = cdn_redirect_ratio
         self._counter = 0
 
     def decide_redirect(self, request: Request) -> RedirectDecision:
         self._counter += 1
-        if self._counter > self._cdn_request_ratio:
+        if self._counter > self._cdn_redirect_ratio:
             self._counter = 0
             return RedirectDecision.ORIGIN
         else:
