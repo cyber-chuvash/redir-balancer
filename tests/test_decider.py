@@ -8,7 +8,6 @@ from balancer.redirect_decider import (
     RedirectDecision,
 )
 
-
 _DUMMY_REQUEST: Request = cast(Request, object())
 
 
